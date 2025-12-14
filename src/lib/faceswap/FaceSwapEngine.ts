@@ -5,7 +5,7 @@
  * Takes source face landmarks and target face image to create a face swap effect.
  */
 
-import { FaceDetection, FACE_OVAL_INDICES } from '../../hooks/useMediaPipe';
+import { FaceDetection } from '../../hooks/useMediaPipe';
 
 export interface PresetFace {
   id: string;
@@ -31,7 +31,6 @@ export class FaceSwapEngine {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private targetFaceImage: HTMLImageElement | null = null;
-  private targetFaceLandmarks: NormalizedLandmark[] | null = null;
   private options: FaceSwapOptions;
 
   constructor(options: Partial<FaceSwapOptions> = {}) {
@@ -54,7 +53,6 @@ export class FaceSwapEngine {
       img.crossOrigin = 'anonymous';
       img.onload = () => {
         this.targetFaceImage = img;
-        this.targetFaceLandmarks = face.landmarks || null;
         resolve();
       };
       img.onerror = () => reject(new Error(`Failed to load face image: ${face.imageUrl}`));
@@ -306,7 +304,6 @@ export class FaceSwapEngine {
    */
   clearTargetFace(): void {
     this.targetFaceImage = null;
-    this.targetFaceLandmarks = null;
   }
 
   /**

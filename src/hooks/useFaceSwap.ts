@@ -71,7 +71,6 @@ export function useFaceSwap(options: UseFaceSwapOptions = {}): UseFaceSwapReturn
   const animationFrameRef = useRef<number | null>(null);
   const wsOriginalRef = useRef<WebSocket | null>(null);
   const wsSwappedRef = useRef<WebSocket | null>(null);
-  const lastDetectionTimeRef = useRef<number>(0);
   const [isLoaded, setIsLoaded] = useState(false);
 
   // Generate a simple face detection (assumes face is centered in frame)
@@ -230,60 +229,6 @@ export function useFaceSwap(options: UseFaceSwapOptions = {}): UseFaceSwapReturn
       }
     };
   }, [isStreaming, isFaceSwapEnabled, generateFaceDetection]);
-
-  // Send frame to backend for detection
-  const sendToDetection = useCallback((canvas: HTMLCanvasElement, source: 'original' | 'swapped') => {
-    const ws = source === 'original' ? wsOriginalRef.current : wsSwappedRef.current;
-
-    if (!ws || ws.readyState !== WebSocket.OPEN) {
-      // Try REST API fallback
-      canvas.toBlob(async (blob) => {
-        if (!blob) return;
-
-        try {
-          const formData = new FormData();
-          formData.append('file', blob, 'frame.jpg');
-
-          const response = await fetch('/api/v1/detect/', {
-            method: 'POST',
-            body: formData,
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            const result: DetectionResult = {
-              is_fake: data.result?.is_fake ?? false,
-              confidence: data.result?.confidence ?? 0,
-              processing_time_ms: data.processing_time_ms ?? 0,
-              model: data.result?.model_used ?? 'unknown',
-              source,
-            };
-
-            if (source === 'original') {
-              setOriginalResult(result);
-              onOriginalDetection?.(result);
-            } else {
-              setSwappedResult(result);
-              onSwappedDetection?.(result);
-            }
-          }
-        } catch (err) {
-          console.debug('Detection request failed:', err);
-        }
-      }, 'image/jpeg', 0.8);
-      return;
-    }
-
-    // Send via WebSocket
-    const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
-    const base64Data = dataUrl.split(',')[1];
-
-    ws.send(JSON.stringify({
-      type: 'frame',
-      data: base64Data,
-      timestamp: Date.now(),
-    }));
-  }, [onOriginalDetection, onSwappedDetection]);
 
   // Connect WebSockets for detection
   const connectWebSockets = useCallback(() => {

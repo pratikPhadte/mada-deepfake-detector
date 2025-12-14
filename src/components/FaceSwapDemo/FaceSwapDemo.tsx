@@ -11,7 +11,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Camera,
   CameraOff,
-  Play,
   Square,
   RefreshCw,
   AlertTriangle,
@@ -38,7 +37,6 @@ export function FaceSwapDemo() {
     startStream,
     stopStream,
     selectFace,
-    clearFace,
     toggleFaceSwap,
     videoRef,
     originalCanvasRef,

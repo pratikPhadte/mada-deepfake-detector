@@ -194,7 +194,7 @@ export function useMediaPipe(options: UseMediaPipeOptions = {}): UseMediaPipeRet
   }, [stopCamera]);
 
   // Process a single video frame
-  const processFrame = useCallback(async (video: HTMLVideoElement): Promise<FaceDetection[]> => {
+  const processFrame = useCallback(async (_video: HTMLVideoElement): Promise<FaceDetection[]> => {
     if (!isLoaded) return [];
 
     setIsProcessing(true);
