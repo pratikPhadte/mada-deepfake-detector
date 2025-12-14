@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "homepage": "https://YOUR_USERNAME.github.io/mada-frontend",
+  "homepage": "https://pratikPhadte.github.io/mada-deepfake-detector",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

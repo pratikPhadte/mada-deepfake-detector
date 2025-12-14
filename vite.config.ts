@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/mada-frontend/',
+  base: '/mada-deepfake-detector/',
   server: {
     port: 3000,
     proxy: {
