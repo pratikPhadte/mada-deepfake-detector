@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-mada-gray-200;
+  }
+
+  body {
+    @apply bg-mada-black text-white antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  ::selection {
+    @apply bg-mada-red/30 text-white;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3
+           bg-white text-black font-medium
+           border border-white
+           transition-all duration-300
+           hover:bg-transparent hover:text-white
+           focus:outline-none focus:ring-2 focus:ring-white/50
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3
+           bg-transparent text-white font-medium
+           border border-mada-gray-300
+           transition-all duration-300
+           hover:bg-white/5 hover:border-white
+           focus:outline-none focus:ring-2 focus:ring-white/20;
+  }
+
+  .card {
+    @apply bg-mada-gray-50/50 backdrop-blur-sm rounded-lg border border-mada-gray-200/50
+           p-6 transition-all duration-300 hover:border-mada-gray-300;
+  }
+
+  .card-dark {
+    @apply bg-black/40 backdrop-blur-sm rounded-lg border border-mada-gray-200/30
+           p-6 transition-all duration-300 hover:border-mada-gray-300/50;
+  }
+
+  .input {
+    @apply w-full px-4 py-3 rounded-lg
+           bg-mada-gray-50 border border-mada-gray-200
+           text-white placeholder-mada-gray-400
+           transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-mada-red/30 focus:border-mada-red;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5
+           rounded-full text-xs font-medium;
+  }
+
+  .badge-real {
+    @apply bg-emerald-500/20 text-emerald-400 border border-emerald-500/30;
+  }
+
+  .badge-fake {
+    @apply bg-mada-red/20 text-mada-red-light border border-mada-red/30;
+  }
+
+  /* SpaceX-style section */
+  .section-dark {
+    @apply bg-mada-black;
+  }
+
+  .section-darker {
+    @apply bg-mada-darker;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-mada-red to-mada-red-muted;
+  }
+
+  .text-gradient-silver {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white to-mada-gray-500;
+  }
+
+  .animate-in {
+    animation: animateIn 0.3s ease-out;
+  }
+
+  @keyframes animateIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Subtle grid background like SpaceX */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+}
+
+/* Custom scrollbar - dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-mada-dark;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-mada-gray-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-mada-gray-400;
+}
