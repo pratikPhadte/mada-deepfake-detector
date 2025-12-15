@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api/v1';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://mechelle-pseudolaminated-zachery.ngrok-free.dev/api/v1';
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'multipart/form-data',
+    'ngrok-skip-browser-warning': 'true',
   },
 });
 
